@@ -1,0 +1,27 @@
+Lisaküsimuste vastused:
+1) Kümnendarvu abil otsimine on kiirem kui rooma tähtede kuna integer indekseerimine on palju
+optimiseeritum kui chariga.
+2) Mõlemad lahendused läbivad tsüklit.
+3) Standard SELECT avaldis
+4) Tabeli lugemiskiiruse optimiseerimine.
+5) Et objecti kasutada pead deklareerima klassis meetodeid või protseduure. 
+6) Interface on tühjus, deklareeritud meetodid millel pole sisu, abstractsel on meetodid millel on
+funktsionaalsus küljes. 
+
+Lisaülessanne 2
+
+$conn = mysql_connect('192.168.0.137', 'root', '...');
+$db = mysql_select_db('test', $conn);
+$id = $_GET['id']; // probleem on siin
+$query = mysql_query("SELECT id, kasutajanimi, vanus, kaardi_number FROM kasutajad WHERE id = $id", $conn);
+$result = mysql_fetch_row($query);
+print_r($result);
+
+Probleem on real nr 3, viga on selles et see on väga ebaturvaline.
+Oht on sql injectionis, parandus oleks muuta rida kas:
+$id = (int)$_GET['id'];
+või
+$id=0;
+if (isset($_GET['id']) && is_numeric($_GET['id']))
+	$id=(int)$_GET['id'];
+
